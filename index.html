@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harvey Wade Gonzales</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#fdfbd4;
+  --blue:#002147;
+  --blue-mid:#002f60;
+  --accent:#e8e840;
+  --coral:#ff5c3a;
+  --white:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--cream);color:var(--blue);font-size:15px;line-height:1.6;overflow-x:hidden;cursor:none}
+
+.cursor{position:fixed;width:14px;height:14px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s}
+.cursor.big{width:40px;height:40px;background:var(--coral);mix-blend-mode:multiply}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;border-bottom:2px solid var(--blue);background:var(--cream)}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-.02em;color:var(--blue);text-decoration:none}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--blue);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;padding:0 1.25rem;height:64px;display:flex;align-items:center;transition:background .15s,color .15s}
+.nav-links a:hover{background:var(--blue);color:var(--cream)}
+.nav-cta{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:var(--blue);color:var(--cream);border:2px solid var(--blue);padding:0 1.5rem;height:40px;display:flex;align-items:center;text-decoration:none;font-weight:600;transition:background .15s,border-color .15s}
+.nav-cta:hover{background:var(--coral);border-color:var(--coral)}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--blue);display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;padding-top:64px}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 3rem 4rem 2.5rem;position:relative;z-index:2;border-right:2px solid rgba(253,251,212,.12)}
+.hero-tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.hero-tag::before{content:'';width:30px;height:2px;background:var(--accent);display:inline-block}
+.hero-big{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3.5rem,8vw,7rem);line-height:.92;letter-spacing:-.04em;color:var(--cream);margin-bottom:2rem}
+.hero-big .stroke{-webkit-text-stroke:2px var(--cream);color:transparent}
+.hero-big .accent-word{color:var(--accent)}
+.hero-desc{font-size:1rem;color:rgba(253,251,212,.55);max-width:42ch;line-height:1.75;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-cream{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:var(--cream);color:var(--blue);border:2px solid var(--cream);padding:.85rem 2rem;text-decoration:none;font-weight:600;transition:background .15s,transform .1s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-cream:hover{background:var(--accent);border-color:var(--accent);transform:translate(-2px,-2px)}
+.btn-ghost{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--cream);border:2px solid rgba(253,251,212,.3);padding:.85rem 2rem;text-decoration:none;font-weight:600;transition:border-color .15s,transform .1s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-ghost:hover{border-color:var(--cream);transform:translate(-2px,-2px)}
+.hero-right{display:flex;align-items:center;justify-content:center;padding:2rem;position:relative;z-index:2}
+.hero-avatar-box{background:var(--cream);border:2px solid rgba(253,251,212,.15);width:100%;max-width:380px;aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-avatar-initials{font-family:'Syne',sans-serif;font-weight:800;font-size:9rem;line-height:1;color:var(--blue);letter-spacing:-.06em;opacity:.06;user-select:none;position:absolute;bottom:-1rem}
+.hero-avatar-content{position:relative;z-index:1;text-align:center;padding:2rem}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--blue);margin-bottom:.5rem;letter-spacing:-.02em}
+.hero-role{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,33,71,.45)}
+.hero-badge{position:absolute;top:1.25rem;right:1.25rem;background:var(--coral);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border:2px solid var(--blue)}
+.hero-circle{position:absolute;border-radius:50%;pointer-events:none}
+.hero-circle-1{width:500px;height:500px;border:2px solid rgba(253,251,212,.05);bottom:-200px;right:-100px}
+.hero-circle-2{width:300px;height:300px;border:2px solid rgba(253,251,212,.03);top:80px;left:-100px}
+
+/* TICKER */
+.ticker-wrap{background:var(--accent);border-top:2px solid var(--blue);border-bottom:2px solid var(--blue);overflow:hidden;padding:.65rem 0}
+.ticker-inner{display:flex;white-space:nowrap;animation:ticker 22s linear infinite}
+.ticker-item{font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);padding:0 2rem;flex-shrink:0}
+.ticker-item::after{content:' ★ ';margin-left:1.5rem}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ABOUT */
+#about{padding:0;display:grid;grid-template-columns:1fr 1fr;min-height:75vh}
+.about-left{background:var(--cream);padding:5rem 3rem 5rem 2.5rem;border-right:2px solid var(--blue);display:flex;flex-direction:column;justify-content:center}
+.about-big-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(4rem,10vw,9rem);line-height:.88;letter-spacing:-.05em;color:var(--blue);margin-bottom:3rem}
+.about-paras p{color:rgba(0,33,71,.65);line-height:1.9;margin-bottom:1.25rem;font-size:.95rem;max-width:48ch}
+.about-right{background:var(--blue);padding:5rem 2.5rem;display:flex;flex-direction:column;justify-content:center}
+.about-stat{padding:2rem 0;border-bottom:1px solid rgba(253,251,212,.1);display:flex;align-items:baseline;gap:1.5rem}
+.about-stat:first-child{border-top:1px solid rgba(253,251,212,.1)}
+.about-stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:3rem;color:var(--accent);line-height:1;min-width:90px}
+.about-stat-label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(253,251,212,.45)}
+
+/* SKILLS */
+#skills{padding:5rem 2.5rem;background:var(--cream);border-top:2px solid var(--blue);border-bottom:2px solid var(--blue)}
+.section-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--coral);margin-bottom:.75rem}
+.section-big{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,5rem);line-height:.92;letter-spacing:-.04em;color:var(--blue);margin-bottom:3rem}
+.skills-cards{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--blue)}
+.skill-card{padding:2.5rem 2rem;border-right:2px solid var(--blue);transition:background .15s}
+.skill-card:last-child{border-right:none}
+.skill-card:hover{background:var(--blue)}
+.skill-card:hover .skill-card-title{color:var(--cream)}
+.skill-card:hover .skill-tag{border-color:rgba(253,251,212,.2);color:rgba(253,251,212,.55)}
+.skill-card-num{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--coral);letter-spacing:.1em;margin-bottom:1rem}
+.skill-card-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--blue);margin-bottom:1.5rem;letter-spacing:-.02em;transition:color .15s}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.skill-tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:rgba(0,33,71,.5);border:1px solid rgba(0,33,71,.18);padding:.3rem .75rem;transition:all .15s}
+
+/* WORK */
+#projects{background:var(--blue);padding:5rem 2.5rem;border-bottom:2px solid var(--cream)}
+.work-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem}
+.work-big-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(4rem,10vw,9rem);line-height:.88;letter-spacing:-.05em;color:var(--cream)}
+.work-big-title .stroke{-webkit-text-stroke:2px var(--cream);color:transparent}
+.work-filters{display:flex;gap:.5rem;flex-wrap:wrap;align-self:flex-end}
+.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(253,251,212,.45);background:transparent;border:1px solid rgba(253,251,212,.18);padding:.4rem 1rem;cursor:none;transition:all .15s}
+.filter-btn:hover,.filter-btn.active{color:var(--blue);border-color:var(--accent);background:var(--accent)}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));border:2px solid rgba(253,251,212,.12)}
+.project-card{border-right:2px solid rgba(253,251,212,.08);border-bottom:2px solid rgba(253,251,212,.08);background:var(--blue-mid);cursor:none;overflow:hidden;transition:background .2s;position:relative}
+.project-card:hover{background:var(--blue)}
+.project-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:2px solid rgba(253,251,212,.08)}
+.project-thumb-text{font-family:'Syne',sans-serif;font-weight:800;font-size:5rem;letter-spacing:-.06em;opacity:.12;color:var(--cream);user-select:none}
+.project-thumb-badge{position:absolute;top:1rem;left:1rem;background:var(--accent);color:var(--blue);font-family:'IBM Plex Mono',monospace;font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:.3rem .7rem;border:1.5px solid var(--blue)}
+.project-overlay{position:absolute;inset:0;background:var(--accent);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.project-card:hover .project-overlay{opacity:1}
+.project-overlay-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:.05em;color:var(--blue);text-transform:uppercase}
+.project-body{padding:1.5rem}
+.project-num{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:rgba(253,251,212,.28);letter-spacing:.1em;margin-bottom:.5rem}
+.project-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:var(--cream);margin-bottom:.4rem;line-height:1.2}
+.project-desc{font-size:.8rem;color:rgba(253,251,212,.42);line-height:1.6}
+
+/* SERVICES */
+#services{background:var(--cream);padding:0;border-bottom:2px solid var(--blue)}
+.services-top{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--blue)}
+.services-title-cell{padding:4rem 2.5rem;border-right:2px solid var(--blue)}
+.services-big{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,7vw,7rem);line-height:.88;letter-spacing:-.05em;color:var(--blue)}
+.services-desc-cell{padding:4rem 2.5rem;display:flex;align-items:center}
+.services-desc{font-size:1rem;color:rgba(0,33,71,.6);line-height:1.8;max-width:42ch}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.service-item{padding:2.5rem 2rem;border-right:2px solid var(--blue);border-bottom:2px solid var(--blue);position:relative;overflow:hidden;transition:background .15s;min-height:200px}
+.service-item:nth-child(3n){border-right:none}
+.service-item:nth-child(n+4){border-bottom:none}
+.service-item:hover{background:var(--blue)}
+.service-item:hover .service-name{color:var(--cream)}
+.service-item:hover .service-desc-text{color:rgba(253,251,212,.48)}
+.service-item:hover .service-big-num{color:rgba(253,251,212,.04)}
+.service-big-num{font-family:'Syne',sans-serif;font-weight:800;font-size:6rem;color:rgba(0,33,71,.05);position:absolute;bottom:-1rem;right:1rem;line-height:1;pointer-events:none;transition:color .15s}
+.service-num-label{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;color:var(--coral);margin-bottom:1rem}
+.service-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--blue);margin-bottom:.6rem;transition:color .15s;position:relative;z-index:1}
+.service-desc-text{font-size:.8rem;color:rgba(0,33,71,.5);line-height:1.6;transition:color .15s;position:relative;z-index:1}
+
+/* CONTACT */
+#contact{background:var(--blue);padding:0}
+.contact-top{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid rgba(253,251,212,.1)}
+.contact-left{padding:5rem 3rem 5rem 2.5rem;border-right:2px solid rgba(253,251,212,.1)}
+.contact-big{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.8rem,6vw,5.5rem);line-height:.9;letter-spacing:-.05em;color:var(--cream);margin-bottom:1.5rem}
+.contact-sub{font-size:.95rem;color:rgba(253,251,212,.48);max-width:42ch;line-height:1.75;margin-bottom:3rem}
+.contact-links-list{display:flex;flex-direction:column}
+.contact-link-row{display:flex;align-items:center;gap:1.5rem;padding:1.1rem 0;border-bottom:1px solid rgba(253,251,212,.08);text-decoration:none;transition:padding-left .2s}
+.contact-link-row:first-child{border-top:1px solid rgba(253,251,212,.08)}
+.contact-link-row:hover{padding-left:.75rem}
+.clr-platform{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:rgba(253,251,212,.28);text-transform:uppercase;letter-spacing:.1em;width:75px;flex-shrink:0}
+.clr-value{font-size:.85rem;color:rgba(253,251,212,.65);transition:color .2s}
+.contact-link-row:hover .clr-value{color:var(--accent)}
+.clr-arrow{margin-left:auto;color:rgba(253,251,212,.2);font-size:1rem;transition:transform .2s,color .2s}
+.contact-link-row:hover .clr-arrow{transform:translate(4px,-4px);color:var(--accent)}
+.contact-right{padding:5rem 2.5rem}
+.form-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;display:flex;align-items:center;gap:.75rem}
+.form-eyebrow::before{content:'';width:24px;height:2px;background:var(--accent);display:inline-block}
+.contact-form{display:flex;flex-direction:column;gap:1.25rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.form-field{display:flex;flex-direction:column;gap:.5rem}
+.form-label{font-family:'IBM Plex Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(253,251,212,.38)}
+.form-input,.form-textarea{background:rgba(253,251,212,.05);border:1.5px solid rgba(253,251,212,.14);color:var(--cream);font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;padding:.85rem 1rem;outline:none;resize:none;transition:border-color .2s,background .2s;width:100%}
+.form-input:focus,.form-textarea:focus{border-color:var(--accent);background:rgba(253,251,212,.08)}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(253,251,212,.22)}
+.form-textarea{height:120px}
+.btn-send{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:var(--accent);color:var(--blue);border:2px solid var(--accent);padding:.9rem 2.5rem;cursor:none;font-weight:600;align-self:flex-start;transition:background .15s,transform .1s}
+.btn-send:hover{background:var(--cream);border-color:var(--cream);transform:translate(-2px,-2px)}
+
+/* FOOTER */
+footer{background:var(--blue);padding:1.75rem 2.5rem;border-top:2px solid rgba(253,251,212,.1);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:rgba(253,251,212,.28);letter-spacing:.05em}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--cream)}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,20,50,.92);align-items:center;justify-content:center;padding:2rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--cream);border:2px solid var(--blue);max-width:580px;width:100%;max-height:80vh;overflow-y:auto;padding:2.5rem;position:relative}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--blue);border:none;color:var(--cream);width:32px;height:32px;font-size:.9rem;cursor:none;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.modal-close:hover{background:var(--coral)}
+.modal-cat{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--coral);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.5rem}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.75rem;color:var(--blue);margin-bottom:1rem;letter-spacing:-.03em}
+.modal-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem}
+.modal-tag{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--blue);border:1.5px solid var(--blue);padding:.2rem .6rem;opacity:.45}
+.modal-section-label{font-family:'IBM Plex Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);margin-bottom:.4rem;margin-top:1.25rem}
+.modal-text{font-size:.88rem;color:rgba(0,33,71,.65);line-height:1.75}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  #hero,#about,.contact-top,.services-top{grid-template-columns:1fr}
+  .hero-left{border-right:none;border-bottom:2px solid rgba(253,251,212,.12)}
+  .skills-cards{grid-template-columns:1fr}
+  .skill-card{border-right:none;border-bottom:2px solid var(--blue)}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .services-title-cell{border-right:none;border-bottom:2px solid var(--blue)}
+  .contact-left{border-right:none;border-bottom:2px solid rgba(253,251,212,.1)}
+  .about-left{border-right:none;border-bottom:2px solid var(--blue)}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  nav{padding:0 1.25rem}
+  .nav-links{display:none}
+  .services-grid{grid-template-columns:1fr}
+  .service-item{border-right:none}
+  footer{flex-direction:column;gap:.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a class="nav-logo" href="#hero">HWG.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Let's Talk →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-circle hero-circle-1"></div>
+  <div class="hero-circle hero-circle-2"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Available for freelance</div>
+    <h1 class="hero-big">
+      Crafting<br>
+      <span class="accent-word">Bold</span><br>
+      <span class="stroke">Visuals.</span>
+    </h1>
+    <p class="hero-desc">I'm a fresh IT graduate and graphic designer focused on branding, social media visuals, and digital layouts — with light video editing and simple web builds to bring ideas to life.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-cream">View My Work →</a>
+      <a href="#contact" class="btn-ghost">Contact Me</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-avatar-box">
+      <div class="hero-badge">PH — Based</div>
+      <div class="hero-avatar-content">
+        <div class="hero-name">Harvey Wade Gonzales</div>
+        <div class="hero-role">Graphic Designer · Video Editor · UI/UX</div>
+      </div>
+      <div class="hero-avatar-initials">HWG</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span class="ticker-item">Graphic Design</span><span class="ticker-item">Branding & Logos</span><span class="ticker-item">Social Media Visuals</span><span class="ticker-item">Video Editing</span><span class="ticker-item">Web Development</span><span class="ticker-item">Facebook Frames</span><span class="ticker-item">Infographics</span><span class="ticker-item">UI/UX Design</span>
+    <span class="ticker-item">Graphic Design</span><span class="ticker-item">Branding & Logos</span><span class="ticker-item">Social Media Visuals</span><span class="ticker-item">Video Editing</span><span class="ticker-item">Web Development</span><span class="ticker-item">Facebook Frames</span><span class="ticker-item">Infographics</span><span class="ticker-item">UI/UX Design</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left">
+    <div class="about-big-title">ABOUT<br>ME.</div>
+    <div class="about-paras">
+      <p>I'm an IT graduate and graphic designer with a passion for creating clean and impactful visual content.</p>
+      <p>I specialize in branding, logos, infographics, and social media designs — with light video editing and basic web development to bring ideas to life.</p>
+      <p>I aim to grow as a creative professional by combining design and technology to build engaging digital experiences.</p>
+    </div>
+  </div>
+  <div class="about-right">
+    <div class="about-stat"><div class="about-stat-num">IT</div><div class="about-stat-label">Graduate — Information Technology</div></div>
+    <div class="about-stat"><div class="about-stat-num">3+</div><div class="about-stat-label">Years of design experience</div></div>
+    <div class="about-stat"><div class="about-stat-num">6+</div><div class="about-stat-label">Design & dev tools mastered</div></div>
+    <div class="about-stat"><div class="about-stat-num">PH</div><div class="about-stat-label">Philippines — open to global work</div></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-eyebrow">Tools & Technologies</div>
+  <div class="section-big">SKILLS.</div>
+  <div class="skills-cards">
+    <div class="skill-card">
+      <div class="skill-card-num">01 — Design</div>
+      <div class="skill-card-title">Graphic Design</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Photoshop</span><span class="skill-tag">Illustrator</span><span class="skill-tag">Canva</span><span class="skill-tag">Inkscape</span><span class="skill-tag">Figma</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-num">02 — Motion</div>
+      <div class="skill-card-title">Video Editing</div>
+      <div class="skill-tags">
+        <span class="skill-tag">CapCut</span><span class="skill-tag">After Effects</span><span class="skill-tag">Canva</span><span class="skill-tag">Alight Motion</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-num">03 — Code</div>
+      <div class="skill-card-title">Web & Tech</div>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span><span class="skill-tag">C#</span><span class="skill-tag">PHP</span><span class="skill-tag">GitHub</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="projects">
+  <div class="work-header">
+    <div class="work-big-title">SELECTED<br><span class="stroke">WORK.</span></div>
+    <div class="work-filters">
+      <button class="filter-btn active" onclick="filterProjects('all',this)">All</button>
+      <button class="filter-btn" onclick="filterProjects('Graphic Design',this)">Graphic Design</button>
+      <button class="filter-btn" onclick="filterProjects('Video Editing',this)">Video</button>
+      <button class="filter-btn" onclick="filterProjects('Web',this)">Web</button>
+    </div>
+  </div>
+  <div class="projects-grid" id="projects-grid">
+    <div class="project-card" data-cat="Graphic Design" onclick="openModal(0)">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#1a0000,#2c0808)">
+        <div class="project-thumb-text">CK</div>
+        <div class="project-thumb-badge">Graphic Design</div>
+        <div class="project-overlay"><div class="project-overlay-text">View Details →</div></div>
+      </div>
+      <div class="project-body">
+        <div class="project-num">01 / Graphic Design</div>
+        <div class="project-title">CYBERKNIGHTS Profile Frame</div>
+        <div class="project-desc">Medieval-themed Facebook frame for CCS — knight motif, bold red-black palette.</div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="Graphic Design" onclick="openModal(1)">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#001020,#001a35)">
+        <div class="project-thumb-text">BR</div>
+        <div class="project-thumb-badge">Branding</div>
+        <div class="project-overlay"><div class="project-overlay-text">View Details →</div></div>
+      </div>
+      <div class="project-body">
+        <div class="project-num">02 / Graphic Design</div>
+        <div class="project-title">Branding / Logo Design</div>
+        <div class="project-desc">Custom logo and brand identity built around strong type and a minimal icon system.</div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="Graphic Design" onclick="openModal(2)">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#001810,#002a1a)">
+        <div class="project-thumb-text">SM</div>
+        <div class="project-thumb-badge">Social Media</div>
+        <div class="project-overlay"><div class="project-overlay-text">View Details →</div></div>
+      </div>
+      <div class="project-body">
+        <div class="project-num">03 / Graphic Design</div>
+        <div class="project-title">Social Media Visuals</div>
+        <div class="project-desc">Scroll-stopping posts and announcement layouts for digital platforms.</div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="Video Editing" onclick="openModal(3)">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a0a,#181818)">
+        <div class="project-thumb-text">▶</div>
+        <div class="project-thumb-badge">Video</div>
+        <div class="project-overlay"><div class="project-overlay-text">View Details →</div></div>
+      </div>
+      <div class="project-body">
+        <div class="project-num">04 / Video Editing</div>
+        <div class="project-title">Promo Reel Edit</div>
+        <div class="project-desc">Short-form promotional reel with transitions, text overlays, and music sync.</div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="Web" onclick="openModal(4)">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#001810,#002a1a)">
+        <div class="project-thumb-text">LD</div>
+        <div class="project-thumb-badge">Web App</div>
+        <div class="project-overlay"><div class="project-overlay-text">View Details →</div></div>
+      </div>
+      <div class="project-body">
+        <div class="project-num">05 / Web</div>
+        <div class="project-title">LokiDrive</div>
+        <div class="project-desc">Personal cloud storage app — Node.js, Express, Supabase, custom dark UI.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-top">
+    <div class="services-title-cell">
+      <div class="section-eyebrow">What I offer</div>
+      <div class="services-big">SERVICES.</div>
+    </div>
+    <div class="services-desc-cell">
+      <p class="services-desc">I'm a creative who can help take your project from ground zero to a polished launch — whether it's a brand identity, social campaign, or a web build. Let's make something great.</p>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-big-num">01</div>
+      <div class="service-num-label">01 — Visual</div>
+      <div class="service-name">Social Media Design</div>
+      <div class="service-desc-text">Posts, stories, banners, and announcements tailored for your brand and audience.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-big-num">02</div>
+      <div class="service-num-label">02 — Print</div>
+      <div class="service-name">Poster & Announcement Design</div>
+      <div class="service-desc-text">Eye-catching layouts for events, campaigns, and organizational announcements.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-big-num">03</div>
+      <div class="service-num-label">03 — Identity</div>
+      <div class="service-name">Branding & Logo Concepts</div>
+      <div class="service-desc-text">Visual identity systems — wordmarks, logos, and brand color palettes from scratch.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-big-num">04</div>
+      <div class="service-num-label">04 — Social</div>
+      <div class="service-name">Facebook Frames</div>
+      <div class="service-desc-text">Custom profile frames for organizations, events, and advocacy campaigns.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-big-num">05</div>
+      <div class="service-num-label">05 — Motion</div>
+      <div class="service-name">Basic Video Editing</div>
+      <div class="service-desc-text">Short reels, promos, and event recaps with transitions and motion effects.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-big-num">06</div>
+      <div class="service-num-label">06 — Web</div>
+      <div class="service-name">Simple Website Design</div>
+      <div class="service-desc-text">Clean, responsive HTML/CSS websites and UI layouts for small projects.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-top">
+    <div class="contact-left">
+      <h2 class="contact-big">LET'S WORK<br>TOGETHER.</h2>
+      <p class="contact-sub">Feel free to reach out for design projects, collaborations, or opportunities. I'm open to freelance work.</p>
+      <div class="contact-links-list">
+        <a class="contact-link-row" href="mailto:wadegonzales016@gmail.com"><span class="clr-platform">Email</span><span class="clr-value">wadegonzales016@gmail.com</span><span class="clr-arrow">↗</span></a>
+        <a class="contact-link-row" href="tel:+63912934765"><span class="clr-platform">Phone</span><span class="clr-value">+63 912 934 765</span><span class="clr-arrow">↗</span></a>
+        <a class="contact-link-row" href="https://github.com/wadegonzales" target="_blank"><span class="clr-platform">GitHub</span><span class="clr-value">wadegonzales</span><span class="clr-arrow">↗</span></a>
+        <a class="contact-link-row" href="https://linkedin.com/in/harvey-wade-gonzales" target="_blank"><span class="clr-platform">LinkedIn</span><span class="clr-value">Harvey Wade Gonzales</span><span class="clr-arrow">↗</span></a>
+        <a class="contact-link-row" href="#"><span class="clr-platform">Facebook</span><span class="clr-value">Wade Gonzales</span><span class="clr-arrow">↗</span></a>
+        <a class="contact-link-row" href="#"><span class="clr-platform">Instagram</span><span class="clr-value">Wade Gonzales</span><span class="clr-arrow">↗</span></a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="form-eyebrow">Send a Message</div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-field"><label class="form-label">Name</label><input class="form-input" type="text" placeholder="Your name" id="cf-name"></div>
+          <div class="form-field"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="your@email.com" id="cf-email"></div>
+        </div>
+        <div class="form-field"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Tell me about your project..." id="cf-msg"></textarea></div>
+        <button class="btn-send" onclick="handleSend()">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2025 Harvey Wade Gonzales. All rights reserved.</div>
+  <div class="footer-logo">HWG.</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-cat" id="m-cat"></div>
+    <div class="modal-title" id="m-title"></div>
+    <div class="modal-tags" id="m-tags"></div>
+    <div class="modal-section-label">Description</div>
+    <div class="modal-text" id="m-desc"></div>
+    <div class="modal-section-label">Purpose</div>
+    <div class="modal-text" id="m-purpose"></div>
+    <div class="modal-section-label">Tools Used</div>
+    <div class="modal-text" id="m-tools"></div>
+  </div>
+</div>
+
+<script>
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+document.querySelectorAll('a,button,.project-card,.service-item,.skill-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
+});
+
+const projects=[
+  {cat:'Graphic Design',title:'CYBERKNIGHTS Profile Frame',tags:['Facebook Frame','Photoshop','School Project','CCS'],desc:'A medieval-themed Facebook profile frame for the College of Computer Studies. Features a knight motif with a bold red-black color palette.',purpose:'Created as an organizational graphic for CCS to promote unity and identity among students during events.',tools:'Adobe Photoshop, Illustrator'},
+  {cat:'Graphic Design',title:'Branding / Logo Design',tags:['Logo','Branding','Identity','Illustrator'],desc:'Custom logo and brand identity concept built around strong typography and a minimal icon system.',purpose:'Personal/client branding exercise to practice visual identity work.',tools:'Illustrator, Inkscape, Canva'},
+  {cat:'Graphic Design',title:'Social Media Visuals',tags:['Social Media','Posts','Stories','Canva'],desc:'A series of posts, announcements, and story graphics designed for digital platforms.',purpose:'To create engaging, on-brand visual content for organizations and personal projects.',tools:'Canva, Photoshop, Figma'},
+  {cat:'Video Editing',title:'Promo Reel Edit',tags:['Reel','CapCut','Short-form','School'],desc:'Short promotional reel edited with transitions, text overlays, and music sync.',purpose:'Practice short-form video editing for school or organizational content.',tools:'CapCut, Alight Motion, After Effects'},
+  {cat:'Web',title:'LokiDrive',tags:['Node.js','Express','Supabase','Fullstack','Personal'],desc:'Personal cloud storage web app with admin/guest roles, file categorization, preview support, and a custom dark UI.',purpose:'A self-hosted fullstack project built from scratch as an alternative to commercial cloud storage.',tools:'Node.js, Express, Supabase, HTML/CSS/JS, Render.com'}
+];
+
+function openModal(i){
+  const p=projects[i];
+  document.getElementById('m-cat').textContent=p.cat;
+  document.getElementById('m-title').textContent=p.title;
+  document.getElementById('m-tags').innerHTML=p.tags.map(t=>`<span class="modal-tag">${t}</span>`).join('');
+  document.getElementById('m-desc').textContent=p.desc;
+  document.getElementById('m-purpose').textContent=p.purpose;
+  document.getElementById('m-tools').textContent=p.tools;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(e){if(e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').classList.remove('open')}
+function closeModalDirect(){document.getElementById('modal-overlay').classList.remove('open')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('modal-overlay').classList.remove('open')});
+function filterProjects(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none'});
+}
+function handleSend(){
+  const n=document.getElementById('cf-name').value.trim();
+  const e=document.getElementById('cf-email').value.trim();
+  const m=document.getElementById('cf-msg').value.trim();
+  if(!n||!e||!m){alert('Please fill in all fields.');return;}
+  alert('Thanks, '+n+'! (Connect Formspree or EmailJS to enable real message delivery.)');
+  ['cf-name','cf-email','cf-msg'].forEach(id=>document.getElementById(id).value='');
+}
+</script>
+</body>
+</html>
