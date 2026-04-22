@@ -671,6 +671,10 @@ nav {
   z-index: 1;
 }
 
+.tools{
+  height: 110%;
+}
+
 /* Category block */
 .skill-block {
   margin-bottom: 3.5rem;
@@ -767,6 +771,42 @@ nav {
   text-transform: uppercase;
   color: rgba(255,255,255,0.85);
   line-height: 1.2;
+}
+
+/* Filler card — fills empty grid space with a summary stat */
+.tool-filler {
+  background: var(--bg3);
+  border: 1px dashed var(--border-hi);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: .5rem;
+  aspect-ratio: 1;
+  gap: 0.25rem;
+  height: 100%;
+
+}
+.tool-filler-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 20px rgba(41,194,132,0.35);
+}
+.tool-filler-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.80rem;
+  color: var(--text);
+}
+.tool-filler-sub {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.60rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  line-height: 1.5;
 }
 
 /* ============================================================
@@ -901,18 +941,40 @@ nav {
   z-index: 2;
 }
 
-/* Green overlay on hover */
-.proj-hover {
+/* Placeholder image layer — shown until you drop in a real image */
+.proj-img-placeholder {
   position: absolute;
   inset: 0;
-  background: rgba(41,194,132,0.88);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0;
+  gap: 0.65rem;
+  background: var(--bg3);
+  border: 1px dashed rgba(41,194,132,0.2);
+  padding: 1.5rem;
+  text-align: center;
   transition: opacity 0.2s;
-  z-index: 3;
 }
+.proj-img-icon {
+  font-size: 2.2rem;
+  opacity: 0.35;
+}
+.proj-img-hint {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.60rem;
+  color: var(--faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  max-width: 22ch;
+}
+/* Hide placeholder once a real image is present */
+.proj-thumb img.loaded + .proj-img-placeholder,
+.proj-thumb img:not([src=""]) ~ .proj-img-placeholder {
+  display: none;
+}
+
 .proj:hover .proj-hover { opacity: 1; }
 .proj-hover span {
   font-family: 'Inter', sans-serif;
@@ -1151,6 +1213,60 @@ nav {
   color: var(--accent);
   letter-spacing: 0.10em;
   text-transform: uppercase;
+}
+
+/* CTA testimonial card */
+.testi-cta {
+  border: 1px dashed rgba(41,194,132,0.30) !important;
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.testi-cta:hover { background: rgba(41,194,132,0.03) !important; }
+.testi-cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.85rem;
+  padding: 1rem;
+}
+.testi-cta-icon {
+  font-size: 2rem;
+  color: var(--accent);
+  opacity: 0.50;
+  line-height: 1;
+}
+.testi-cta-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: var(--text);
+  letter-spacing: 0.03em;
+  opacity: 0.35;
+}
+.testi-cta-body {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 26ch;
+}
+.testi-cta-btn {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  padding: 0.55rem 1.25rem;
+  margin-top: 0.5rem;
+  transition: background 0.15s, color 0.15s;
+}
+.testi-cta-btn:hover {
+  background: var(--accent);
+  color: #000;
 }
 
 /* ============================================================
@@ -1707,7 +1823,6 @@ footer {
       <div class="theme-toggle" onclick="toggleTheme()">
         <span class="toggle-label" id="toggle-label">Dark</span>
         <div class="toggle-track"><div class="toggle-knob"></div></div>
-
       </div>
       <a href="#contact" class="nav-cta">Let's Talk →</a>
     </div>
@@ -1721,19 +1836,20 @@ footer {
 
   <div class="hero-left">
 
-    <!-- Greeting — replaces old "Available for freelance" tag -->
-    <div class="hero-greeting reveal">Hi, I'm Wade —</div>
-    <div class="hero-tag reveal reveal-delay-1">Graphic Designer &amp; IT Graduate</div>
+    <!-- Greeting -->
+    <div class="hero-greeting reveal">Hi, I'm Wade.</div>
+    <div class="hero-tag reveal reveal-delay-1">Open for Freelance &amp; Full-time</div>
 
     <h1 class="hero-big reveal reveal-delay-2">
-      Crafting<br>
-      <span class="accent-word">Bold</span><br>
-      <span class="stroke">Visuals.</span>
+      <span class="accent-word">Graphic</span><br>
+      Designer<br>
+      <span class="stroke">&amp; Creator.</span>
     </h1>
 
     <p class="hero-desc reveal reveal-delay-3">
-      I design branding, social media content, and digital layouts —
-      with light video editing and basic web development to bring ideas to life.
+      I'm Harvey Wade Gonzales — an IT graduate from the Philippines who turns ideas
+      into bold visuals. I specialize in branding, social media design, and event
+      materials, with skills in video editing and web development on the side.
     </p>
 
     <div class="hero-btns reveal reveal-delay-4">
@@ -1832,15 +1948,45 @@ footer {
     <div class="skill-category-header">
       <div class="skill-category">Graphic Design</div>
       <div class="skill-category-desc">
-        I use these tools to create brand identities, posters, social media graphics, event materials, and digital layouts from concept to final output.
+        I use these tools to create brand identities, posters, social media graphics,
+        event materials, and digital layouts from concept to final output.
       </div>
     </div>
     <div class="tools-grid">
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🎨</span></div><div class="tool-gradient"><div class="tool-name">Photoshop</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">✏️</span></div><div class="tool-gradient"><div class="tool-name">Illustrator</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🖌️</span></div><div class="tool-gradient"><div class="tool-name">Canva</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🖊️</span></div><div class="tool-gradient"><div class="tool-name">Inkscape</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🔲</span></div><div class="tool-gradient"><div class="tool-name">Figma</div></div></div>
+
+      <div class="tool-card">
+        <img src="/logo/Adobe_Photoshop_CC_icon.svg.png" alt="Photoshop" class="tools">
+
+        <div class="tool-gradient"><div class="tool-name">Photoshop</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/ai.png" alt="Illustrator" class="tools">
+        <div class="tool-gradient"><div class="tool-name">Illustrator</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/canva.jpg" alt="Canva" class="tools">
+        <div class="tool-gradient"><div class="tool-name">Canva</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/inkscape.png" alt="Inkscape" class="tools">
+        <div class="tool-gradient"><div class="tool-name">Inkscape</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/figma.png" alt="Figma" class="tools">
+        <div class="tool-gradient"><div class="tool-name">Figma</div></div>
+      </div>
+
+      <!-- Filler card: shows skill summary instead of a tool -->
+      <div class="tool-filler">
+        <div class="tool-filler-num">5</div>
+        <div class="tool-filler-label">Design tools</div>
+        <div class="tool-filler-sub">Brand identity · Print · Digital · Social</div>
+      </div>
+
     </div>
   </div>
 
@@ -1849,13 +1995,34 @@ footer {
     <div class="skill-category-header">
       <div class="skill-category">Video Editing</div>
       <div class="skill-category-desc">
-        I use these to produce short-form reels, event promos, and motion graphics — trimming, syncing audio, adding transitions and text overlays.
+        I use these to produce short-form reels, event promos, and motion graphics —
+        trimming, syncing audio, adding transitions and text overlays.
       </div>
     </div>
     <div class="tools-grid">
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🎬</span></div><div class="tool-gradient"><div class="tool-name">CapCut</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🎞️</span></div><div class="tool-gradient"><div class="tool-name">After Effects</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">✨</span></div><div class="tool-gradient"><div class="tool-name">Alight Motion</div></div></div>
+
+      <div class="tool-card">
+        <img src="/logo/capcut.webp" alt="CapCut" class="tools">
+        <div class="tool-gradient"><div class="tool-name">CapCut</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/ae.png" alt="After Effects" class="tools">
+        <div class="tool-gradient"><div class="tool-name">After Effects</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/am.jpg" alt="Alight Motion" class="tools">
+        <div class="tool-gradient"><div class="tool-name">Alight Motion</div></div>
+      </div>
+
+      <!-- Filler -->
+      <div class="tool-filler">
+        <div class="tool-filler-num">3</div>
+        <div class="tool-filler-label">Video tools</div>
+        <div class="tool-filler-sub">Reels · Motion · Promos · Transitions</div>
+      </div>
+
     </div>
   </div>
 
@@ -1864,16 +2031,49 @@ footer {
     <div class="skill-category-header">
       <div class="skill-category">Web &amp; Tech</div>
       <div class="skill-category-desc">
-        I build simple, responsive websites and handle light backend work — from static pages to functional web apps with database integration.
+        I build simple, responsive websites and handle light backend work —
+        from static pages to functional web apps with database integration.
       </div>
     </div>
     <div class="tools-grid">
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🌐</span></div><div class="tool-gradient"><div class="tool-name">HTML</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">💅</span></div><div class="tool-gradient"><div class="tool-name">CSS</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">⚡</span></div><div class="tool-gradient"><div class="tool-name">JavaScript</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🔷</span></div><div class="tool-gradient"><div class="tool-name">C#</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🐘</span></div><div class="tool-gradient"><div class="tool-name">PHP</div></div></div>
-      <div class="tool-card"><div class="tool-logo"><span class="tool-logo-emoji">🐙</span></div><div class="tool-gradient"><div class="tool-name">GitHub</div></div></div>
+
+      <div class="tool-card">
+        <img src="/logo/html.png" alt="HTML" class="tools">
+        <div class="tool-gradient"><div class="tool-name">HTML</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/ccs.png" alt="CSS" class="tools">
+        <div class="tool-gradient"><div class="tool-name">CSS</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/js.png" alt="JavaScript" class="tools">
+        <div class="tool-gradient"><div class="tool-name">JavaScript</div></div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-logo"><span class="tool-logo-emoji">#</span></div>
+        <div class="tool-gradient"><div class="tool-name">C#</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/php.png" alt="PHP" class="tools">
+        <div class="tool-gradient"><div class="tool-name">PHP</div></div>
+      </div>
+
+      <div class="tool-card">
+        <img src="/logo/github.png" alt="GitHub" class="tools">
+        <div class="tool-gradient"><div class="tool-name">GitHub</div></div>
+      </div>
+
+      <!-- Filler -->
+      <div class="tool-filler">
+        <div class="tool-filler-num">6</div>
+        <div class="tool-filler-label">Web &amp; tech tools</div>
+        <div class="tool-filler-sub">Frontend · Backend · Version control</div>
+      </div>
+
     </div>
   </div>
 
@@ -1891,44 +2091,33 @@ footer {
       <button class="filter-btn" onclick="filterWork('design', this)">Design</button>
       <button class="filter-btn" onclick="filterWork('video', this)">Video</button>
       <button class="filter-btn" onclick="filterWork('web', this)">Web</button>
-    </div>
+    </div>q
   </div>
 
   <div class="projects-grid" id="projects-grid">
 
-    <!-- Featured: Event Design Collection — wide -->
+    <!-- 1. Social Media -->
     <div class="proj wide reveal" data-cat="design" onclick="openModal(0)">
       <div class="proj-thumb">
-        <div class="proj-thumb-bg"><div class="proj-thumb-letter">ED</div></div>
-        <div class="proj-badge">Event Design</div>
-        <div class="proj-hover"><span>View Details →</span></div>
-      </div>
-      <div class="proj-body">
-        <div>
-          <div class="proj-cat">Graphic Design · Collection</div>
-          <div class="proj-title">Event Design Collection</div>
-          <div class="proj-desc">A complete set of event materials — table numbers, certificates, invitation cards, banners, and program layouts built around a unified theme.</div>
-        </div>
-        <div class="proj-tags">
-          <span class="proj-tag">Photoshop</span>
-          <span class="proj-tag">Canva</span>
-          <span class="proj-tag">Print</span>
-        </div>
-      </div>
-    </div>
+        <img src="outputs/socmedgridoutput.png" alt="Social Media Design"
+             loading="lazy"
+             onload="this.classList.add('loaded')"
+             onerror="this.style.display='none'">
 
-    <!-- Social Media -->
-    <div class="proj reveal reveal-delay-1" data-cat="design" onclick="openModal(1)">
-      <div class="proj-thumb">
-        <div class="proj-thumb-bg"><div class="proj-thumb-letter">SM</div></div>
+        <div class="proj-img-placeholder">
+          <div class="proj-img-icon">📸</div>
+          <div class="proj-img-hint">Social Media Design</div>
+        </div>
+
         <div class="proj-badge">Social Media</div>
         <div class="proj-hover"><span>View Details →</span></div>
       </div>
+
       <div class="proj-body">
         <div>
-          <div class="proj-cat">Graphic Design · Collection</div>
-          <div class="proj-title">Social Media Campaigns</div>
-          <div class="proj-desc">Scroll-stopping posts, announcements, and story graphics for digital platforms.</div>
+          <div class="proj-cat">Graphic Design</div>
+          <div class="proj-title">Social Media Design</div>
+          <div class="proj-desc">Scroll-stopping posts and digital visuals built for engagement and brand consistency.</div>
         </div>
         <div class="proj-tags">
           <span class="proj-tag">Canva</span>
@@ -1937,71 +2126,159 @@ footer {
       </div>
     </div>
 
-    <!-- Promo Reel -->
-    <div class="proj reveal reveal-delay-2" data-cat="video" onclick="openModal(2)">
+    <!-- 2. Branding -->
+    <div class="proj reveal reveal-delay-1" data-cat="design" onclick="openModal(1)">
       <div class="proj-thumb">
-        <div class="proj-thumb-bg"><div class="proj-thumb-letter">▶</div></div>
-        <div class="proj-badge">Video</div>
-        <div class="proj-hover"><span>View Details →</span></div>
-      </div>
-      <div class="proj-body">
-        <div>
-          <div class="proj-cat">Video Editing</div>
-          <div class="proj-title">Promo Reel Edit</div>
-          <div class="proj-desc">Short-form promo reel with transitions, text overlays, and music sync.</div>
-        </div>
-        <div class="proj-tags">
-          <span class="proj-tag">CapCut</span>
-          <span class="proj-tag">Alight Motion</span>
-        </div>
-      </div>
-    </div>
+        <img src="outputs/Messenger_creation_1650814778848518.jpeg" alt="Logo Branding"
+             loading="lazy"
+             onload="this.classList.add('loaded')"
+             onerror="this.style.display='none'">
 
-    <!-- LokiDrive — wide -->
-    <div class="proj wide reveal" data-cat="web" onclick="openModal(3)">
-      <div class="proj-thumb">
-        <div class="proj-thumb-bg"><div class="proj-thumb-letter">LD</div></div>
-        <div class="proj-badge">Web App</div>
-        <div class="proj-hover"><span>View Details →</span></div>
-      </div>
-      <div class="proj-body">
-        <div>
-          <div class="proj-cat">Web Development</div>
-          <div class="proj-title">LokiDrive</div>
-          <div class="proj-desc">Personal cloud storage web app with admin/guest roles, file categorization, preview support, and a fully custom dark UI. Built from scratch with Node.js, Express &amp; Supabase.</div>
+        <div class="proj-img-placeholder">
+          <div class="proj-img-icon">🔤</div>
+          <div class="proj-img-hint">Branding & Logos</div>
         </div>
-        <div class="proj-tags">
-          <span class="proj-tag">Node.js</span>
-          <span class="proj-tag">Express</span>
-          <span class="proj-tag">Supabase</span>
-          <span class="proj-tag">HTML/CSS/JS</span>
-        </div>
-      </div>
-    </div>
 
-    <!-- Org Frame -->
-    <div class="proj reveal reveal-delay-1" data-cat="design" onclick="openModal(4)">
-      <div class="proj-thumb">
-        <div class="proj-thumb-bg"><div class="proj-thumb-letter">FR</div></div>
-        <div class="proj-badge">Org Design</div>
+        <div class="proj-badge">Branding</div>
         <div class="proj-hover"><span>View Details →</span></div>
       </div>
+
       <div class="proj-body">
         <div>
           <div class="proj-cat">Graphic Design</div>
-          <div class="proj-title">Organizational Design</div>
-          <div class="proj-desc">Branded materials for a college org — profile frames, identity graphics, and promotional assets.</div>
+          <div class="proj-title">Logo & Brand Identity</div>
+          <div class="proj-desc">Custom logos and identity systems built from scratch.</div>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">Illustrator</span>
+          <span class="proj-tag">Inkscape</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Infographics -->
+    <div class="proj reveal reveal-delay-2" data-cat="design" onclick="openModal(2)">
+      <div class="proj-thumb">
+        <img src="outputs/Messenger_creation_FE446CE9-5463-4706-ACEA-7A2F6BB5BDC0.jpeg" alt="Infographic Layout"
+             loading="lazy"
+             onload="this.classList.add('loaded')"
+             onerror="this.style.display='none'">
+
+        <div class="proj-img-placeholder">
+          <div class="proj-img-icon">📊</div>
+          <div class="proj-img-hint">Infographics</div>
+        </div>
+
+        <div class="proj-badge">Infographics</div>
+        <div class="proj-hover"><span>View Details →</span></div>
+      </div>
+
+      <div class="proj-body">
+        <div>
+          <div class="proj-cat">Graphic Design</div>
+          <div class="proj-title">Infographics & Layouts</div>
+          <div class="proj-desc">Structured visuals for data, reports, and presentations.</div>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">Canva</span>
+          <span class="proj-tag">Figma</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Event Materials -->
+    <div class="proj wide reveal" data-cat="design" onclick="openModal(3)">
+      <div class="proj-thumb">
+        <img src="outputs/FINAL Invitation (1).png" alt="Event Materials"
+             loading="lazy"
+             onload="this.classList.add('loaded')"
+             onerror="this.style.display='none'">
+
+        <div class="proj-img-placeholder">
+          <div class="proj-img-icon">🎟️</div>
+          <div class="proj-img-hint">Event Materials</div>
+        </div>
+
+        <div class="proj-badge">Event Design</div>
+        <div class="proj-hover"><span>View Details →</span></div>
+      </div>
+
+      <div class="proj-body">
+        <div>
+          <div class="proj-cat">Graphic Design</div>
+          <div class="proj-title">Event Design Materials</div>
+          <div class="proj-desc">Invites, certificates, banners, and full themed event kits.</div>
         </div>
         <div class="proj-tags">
           <span class="proj-tag">Photoshop</span>
-          <span class="proj-tag">Illustrator</span>
+          <span class="proj-tag">Canva</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Video -->
+    <div class="proj reveal reveal-delay-1" data-cat="video" onclick="openModal(4)">
+      <div class="proj-thumb">
+        <img src="outputs/Messenger_creation_3667463723472035.jpeg" alt="Video Reel"
+             loading="lazy"
+             onload="this.classList.add('loaded')"
+             onerror="this.style.display='none'">
+
+        <div class="proj-img-placeholder">
+          <div class="proj-img-icon">🎬</div>
+          <div class="proj-img-hint">Video Editing</div>
+        </div>
+
+        <div class="proj-badge">Video</div>
+        <div class="proj-hover"><span>View Details →</span></div>
+      </div>
+
+      <div class="proj-body">
+        <div>
+          <div class="proj-cat">Video Editing</div>
+          <div class="proj-title">Reels & Motion Graphics</div>
+          <div class="proj-desc">Short-form videos with transitions, text, and music sync.</div>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">CapCut</span>
+          <span class="proj-tag">After Effects</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Web -->
+    <div class="proj reveal reveal-delay-2" data-cat="web" onclick="openModal(5)">
+      <div class="proj-thumb">
+        <img src="outputs/Screenshot (478).png" alt="Portfolio Website"
+             loading="lazy"
+             onload="this.classList.add('loaded')"
+             onerror="this.style.display='none'">
+
+        <div class="proj-img-placeholder">
+          <div class="proj-img-icon">💻</div>
+          <div class="proj-img-hint">Web Project</div>
+        </div>
+
+        <div class="proj-badge">Web Dev</div>
+        <div class="proj-hover"><span>View Details →</span></div>
+      </div>
+
+      <div class="proj-body">
+        <div>
+          <div class="proj-cat">Web Development</div>
+          <div class="proj-title">Personal Cloud-Drive</div>
+          <div class="proj-desc">Custom-built portfolio with animations and dark mode.</div>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML</span>
+          <span class="proj-tag">CSS</span>
+          <span class="proj-tag">JS</span>
         </div>
       </div>
     </div>
 
   </div>
 </section>
-
 <!-- ============================================================
      SERVICES
      ============================================================ -->
@@ -2113,12 +2390,21 @@ footer {
       </div>
     </div>
 
+    <!-- CTA card — add a 4th real testimonial here when ready -->
+    <div class="testi-card testi-cta reveal reveal-delay-3">
+      <div class="testi-cta-inner">
+        <div class="testi-cta-icon">✦</div>
+        <div class="testi-cta-heading">Your name here.</div>
+        <div class="testi-cta-body">
+          Have you worked with Wade? A short testimonial from you would
+          mean a lot — reach out via the contact form below.
+        </div>
+        <a href="#contact" class="testi-cta-btn">Leave a Testimonial →</a>
+      </div>
+    </div>
   </div>
-</section>
 
-<!-- ============================================================
-     CERTIFICATES
-     ============================================================ -->
+
 <section id="certificates">
 
   <div class="section-eyebrow reveal">Credentials &amp; Recognition</div>
@@ -2134,16 +2420,18 @@ footer {
           <div class="cert-thumb-hint">Click to view</div>
         </div>
         <!-- Replace src with actual cert image: <img src="certs/award.jpg"> -->
-        <div class="cert-hover"><span>View Certificate →</span></div>
+             <img src="outputs/cert.png" alt="Video Reel"
+             loading="lazy"
+             onload="this.classList.add('loaded')"
+             onerror="this.style.display='none'">
       </div>
       <div class="cert-body">
         <div class="cert-issuer">School Award · 2024</div>
         <div class="cert-title">Outstanding Graphic Designer</div>
         <div class="cert-desc">Recognized by the College of Computer Studies for exceptional design work and contributions to student organization visual identity throughout the academic year.</div>
       </div>
-    </div>
+    <!-- </div>
 
-    <!-- Certificate 2 — Placeholder for additional cert -->
     <div class="cert-card reveal reveal-delay-1" onclick="openCert('cert2.jpg')">
       <div class="cert-thumb">
         <div class="cert-thumb-placeholder">
@@ -2159,7 +2447,6 @@ footer {
       </div>
     </div>
 
-    <!-- Certificate 3 — Placeholder -->
     <div class="cert-card reveal reveal-delay-2" onclick="openCert('cert3.jpg')">
       <div class="cert-thumb">
         <div class="cert-thumb-placeholder">
@@ -2173,7 +2460,7 @@ footer {
         <div class="cert-title">[Certificate Title Placeholder]</div>
         <div class="cert-desc">Add a short description of what this certification covers and why it's relevant to your work.</div>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </section>
@@ -2245,7 +2532,7 @@ footer {
       <form
         class="contact-form"
         id="contact-form"
-        action="https://formspree.io/f/mbdqynye"
+        action="https://formspree.io/f/YOUR_FORM_ID"
         method="POST"
         onsubmit="handleSend(event)"
       >
@@ -2333,14 +2620,14 @@ function toggleTheme() {
   const next   = isDark ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   document.getElementById('toggle-label').textContent = next === 'dark' ? 'Dark'  : 'Light';
-  document.getElementById('toggle-icon').textContent  = next === 'dark' ? ''   : '🌙';
+  document.getElementById('toggle-icon').textContent  = next === 'dark' ? '☀️'   : '🌙';
   localStorage.setItem('hwg-theme', next);
 }
 (function () {
   const saved = localStorage.getItem('hwg-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
   document.getElementById('toggle-label').textContent = saved === 'dark' ? 'Dark'  : 'Light';
-  document.getElementById('toggle-icon').textContent  = saved === 'dark' ? ''   : '🌙';
+  document.getElementById('toggle-icon').textContent  = saved === 'dark' ? '☀️'   : '🌙';
   if (saved === 'light') document.querySelector('.toggle-knob').style.transform = 'translateX(22px)';
 })();
 
@@ -2357,43 +2644,51 @@ function filterWork(cat, btn) {
 const projects = [
   {
     cat:     'Graphic Design',
-    title:   'Event Design Collection',
-    tags:    ['Print Design', 'Event Materials', 'Photoshop', 'Canva'],
-    desc:    'A complete set of event materials designed around a unified visual theme — table numbers, certificates, invitation cards, event banners, and program layouts.',
-    purpose: 'Created for school or organization events requiring a cohesive branded material set from print to digital.',
+    title:   'Social Media Design',
+    tags:    ['Social Media', 'Posts', 'Stories', 'Canva', 'Photoshop'],
+    desc:    'Scroll-stopping posts, announcements, and story graphics designed for digital platforms — built for engagement and brand consistency.',
+    purpose: 'To create on-brand visual content for organizations and personal projects across Facebook, Instagram, and other platforms.',
+    tools:   'Canva, Adobe Photoshop, Figma'
+  },
+  {
+    cat:     'Graphic Design',
+    title:   'Logo & Brand Identity',
+    tags:    ['Logo', 'Branding', 'Identity', 'Illustrator', 'Inkscape'],
+    desc:    'Custom logo marks and visual identity systems — wordmarks, icon marks, color palettes, and brand guidelines.',
+    purpose: 'Help businesses and organizations establish a consistent and memorable visual identity.',
+    tools:   'Adobe Illustrator, Inkscape, Canva'
+  },
+  {
+    cat:     'Graphic Design',
+    title:   'Infographics & Layouts',
+    tags:    ['Infographic', 'Layout', 'Editorial', 'Canva', 'Figma'],
+    desc:    'Data-driven and editorial layouts — infographics, digital reports, and structured visual content for presentations and publications.',
+    purpose: 'Make complex information visually clear and engaging for academic and organizational use.',
+    tools:   'Canva, Figma, Adobe Photoshop'
+  },
+  {
+    cat:     'Graphic Design',
+    title:   'Event Design Materials',
+    tags:    ['Event', 'Print', 'Invitation', 'Certificate', 'Table Number', 'Photoshop'],
+    desc:    'Full event design sets built around a cohesive visual theme — invitation cards, certificates, table numbers, banners, and program layouts for school and organizational events.',
+    purpose: 'Provide schools and organizations with a complete, print-ready event material package.',
     tools:   'Adobe Photoshop, Canva'
   },
   {
-    cat:     'Graphic Design',
-    title:   'Social Media Campaigns',
-    tags:    ['Social Media', 'Posts', 'Stories', 'Canva', 'Photoshop'],
-    desc:    'A collection of scroll-stopping social media posts, announcements, and story graphics designed for digital platforms.',
-    purpose: 'To create engaging, on-brand visual content for organizations and personal projects.',
-    tools:   'Canva, Photoshop, Figma'
-  },
-  {
     cat:     'Video Editing',
-    title:   'Promo Reel Edit',
-    tags:    ['Reel', 'CapCut', 'Alight Motion', 'Short-form'],
-    desc:    'Short-form promotional reel edited with smooth transitions, text overlays, and music sync for a school or organizational project.',
-    purpose: 'Practice short-form video editing and build a reel portfolio for future client work.',
-    tools:   'CapCut, Alight Motion, After Effects'
+    title:   'Short Reels & Motion Graphics',
+    tags:    ['Reel', 'Motion', 'CapCut', 'Alight Motion', 'After Effects'],
+    desc:    'Promotional reels and motion graphic edits — transitions, kinetic text, music sync, and animated overlays for social and organizational content.',
+    purpose: 'Produce engaging short-form video content for social media and event promotions.',
+    tools:   'CapCut, Alight Motion, Adobe After Effects'
   },
   {
     cat:     'Web Development',
-    title:   'LokiDrive',
-    tags:    ['Node.js', 'Express', 'Supabase', 'Fullstack', 'Personal Project'],
-    desc:    'Personal cloud storage web app with admin and guest roles, file categorization, live preview support, and a fully custom dark UI built from scratch.',
-    purpose: 'A self-hosted alternative to commercial cloud storage, built to showcase fullstack development skills.',
-    tools:   'Node.js, Express, Supabase, HTML/CSS/JS, Render.com'
-  },
-  {
-    cat:     'Graphic Design',
-    title:   'Organizational Design',
-    tags:    ['Facebook Frame', 'Org Identity', 'Photoshop', 'Illustrator'],
-    desc:    'Branded design materials for a college organization — including profile frames, identity graphics, and promotional assets.',
-    purpose: 'Support student org identity and promote unity through consistent visual branding.',
-    tools:   'Adobe Photoshop, Illustrator'
+    title:   'Personal Portfolio Website',
+    tags:    ['HTML', 'CSS', 'JavaScript', 'Responsive', 'Single Page'],
+    desc:    'This portfolio — a fully custom single-page site with dark/light mode, scroll-reveal animations, glow effects, a Formspree-powered contact form, and a certificate lightbox.',
+    purpose: 'Showcase design and development work to potential clients and employers in a professional, memorable way.',
+    tools:   'HTML, CSS, JavaScript, Formspree'
   }
 ];
 
