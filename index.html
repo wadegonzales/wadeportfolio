@@ -39,6 +39,7 @@
   --toggle-track: #1a1a1a;
   --toggle-knob:  #29c284;
   --cursor-col:   #29c284;
+  --profile-bg:    url(/outputs/wade_pic_green.png);
 }
 
 [data-theme="light"] {
@@ -55,7 +56,8 @@
   --nav-bg:       rgba(245, 245, 240, 0.92);
   --toggle-track: #deded8;
   --toggle-knob:  #1fa06a;
-  --cursor-col:   #0a0a0a;
+  --cursor-col:   #ffffff;
+  --profile-bg:    url(/outputs/wade_pic_greenLight.png);
 }
 
 /* ============================================================
@@ -349,9 +351,9 @@ nav {
   color: var(--accent);
   text-shadow: 0 0 40px rgba(41,194,132,0.40);
 }
+
 .hero-big .stroke {
-  -webkit-text-stroke: 1px var(--text);
-  color: transparent;
+  color: --text;
   transition: -webkit-text-stroke-color 0.4s;
 }
 
@@ -437,7 +439,7 @@ nav {
   position: absolute;
   inset: 0;
   background-color: var(--bg3);
-  background-image: url(/outputs/wade_pic_green.png);
+  background-image: var(--profile-bg);
   background-size: cover;
   background-position: center top;
   transition: transform 0.5s ease;
@@ -1885,7 +1887,7 @@ footer {
     <span class="ticker-item">Branding &amp; Logos</span>
     <span class="ticker-item">Social Media Visuals</span>
     <span class="ticker-item">Video Editing</span>
-    <span class="ticker-item">Web Development</span>
+    <!-- <span class="ticker-item">Web Development</span> -->
     <span class="ticker-item">Event Materials</span>
     <span class="ticker-item">Infographics</span>
     <span class="ticker-item">UI/UX Design</span>
@@ -1893,7 +1895,7 @@ footer {
     <span class="ticker-item">Branding &amp; Logos</span>
     <span class="ticker-item">Social Media Visuals</span>
     <span class="ticker-item">Video Editing</span>
-    <span class="ticker-item">Web Development</span>
+    <!-- <span class="ticker-item">Web Development</span> -->
     <span class="ticker-item">Event Materials</span>
     <span class="ticker-item">Infographics</span>
     <span class="ticker-item">UI/UX Design</span>
@@ -1909,7 +1911,7 @@ footer {
     <div class="about-big-title reveal">ABOUT<br>ME.</div>
     <div class="about-paras">
       <p class="reveal reveal-delay-1">I'm an IT graduate and graphic designer with a passion for creating clean and impactful visual content.</p>
-      <p class="reveal reveal-delay-2">I specialize in branding, logos, infographics, and social media designs — with light video editing and basic web development.</p>
+      <p class="reveal reveal-delay-2">I specialize in branding, logos, infographics, and social media designs — with light video editing skills.</p>
       <p class="reveal reveal-delay-3">My goal is to grow as a creative professional by combining design and technology to build engaging digital experiences.</p>
     </div>
   </div>
@@ -2027,7 +2029,7 @@ footer {
   </div>
 
   <!-- ── Web & Tech ── -->
-  <div class="skill-block reveal">
+  <!-- <div class="skill-block reveal">
     <div class="skill-category-header">
       <div class="skill-category">Web &amp; Tech</div>
       <div class="skill-category-desc">
@@ -2067,7 +2069,7 @@ footer {
         <div class="tool-gradient"><div class="tool-name">GitHub</div></div>
       </div>
 
-      <!-- Filler -->
+
       <div class="tool-filler">
         <div class="tool-filler-num">6</div>
         <div class="tool-filler-label">Web &amp; tech tools</div>
@@ -2075,7 +2077,7 @@ footer {
       </div>
 
     </div>
-  </div>
+  </div> -->
 
 </section>
 
@@ -2090,8 +2092,8 @@ footer {
       <button class="filter-btn active" onclick="filterWork('all', this)">All</button>
       <button class="filter-btn" onclick="filterWork('design', this)">Design</button>
       <button class="filter-btn" onclick="filterWork('video', this)">Video</button>
-      <button class="filter-btn" onclick="filterWork('web', this)">Web</button>
-    </div>q
+      <!-- <button class="filter-btn" onclick="filterWork('web', this)">Web</button> -->
+    </div>
   </div>
 
   <div class="projects-grid" id="projects-grid">
@@ -2247,7 +2249,7 @@ footer {
     </div>
 
     <!-- 6. Web -->
-    <div class="proj reveal reveal-delay-2" data-cat="web" onclick="openModal(5)">
+    <!-- <div class="proj reveal reveal-delay-2" data-cat="web" onclick="openModal(5)">
       <div class="proj-thumb">
         <img src="outputs/Screenshot (478).png" alt="Portfolio Website"
              loading="lazy"
@@ -2275,7 +2277,7 @@ footer {
           <span class="proj-tag">JS</span>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </section>
@@ -2327,7 +2329,7 @@ footer {
     </div>
     <div class="service-item reveal reveal-delay-4">
       <div class="service-big-num">06</div>
-      <div class="service-num-label">06 — Web</div>
+      <!-- <div class="service-num-label">06 — Web</div> -->
       <div class="service-name">Simple Website Design</div>
       <div class="service-desc-text">Clean, responsive HTML/CSS sites and UI layouts for small projects.</div>
     </div>
