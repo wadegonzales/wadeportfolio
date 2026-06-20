@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wade Gonzales — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================
+     DESIGN TOKENS
+     ========================================================= */
+  :root{
+    --color-cream:        #fff1be;
+    --color-blue:          #1a3daa;
+    --color-blue-deep:     #1944af;
+    --color-white:         #ffffff;
+    --color-line:          rgba(255,255,255,0.18);
+
+    --font-display:        'Averia Serif Libre', serif;
+
+    --fs-hero:             128px;
+    --fs-section-title:    64px;
+    --fs-project-title:    48px;
+    --fs-marquee:          32px;
+    --fs-tagline:          24px;
+    --fs-badge:            20px;
+    --fs-body:             20px;
+    --fs-cta:              18px;
+    --fs-social-label:     16px;
+    --fs-social-value:     20px;
+
+    --space-md:             10px;
+
+    --canvas-width:        1440px;
+    --stage-height:         9133px;
+
+    --radius-sm:            12px;
+    --radius-md:            20px;
+  }
+
+  /* =========================================================
+     RESET / BASE
+     ========================================================= */
+  *,*::before,*::after{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--color-cream);
+    font-family:var(--font-display);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{ display:block; max-width:none; }
+  p{ margin:0; }
+
+  /* =========================================================
+     CANVAS / STAGE — fixed-width composition that scales as
+     a whole unit on narrower viewports (see note in chat).
+     ========================================================= */
+  .canvas-wrapper{
+    width:100%;
+    overflow:hidden;
+    background:var(--color-cream);
+  }
+
+  h3{
+    margin: 0;
+  }
+  .canvas{
+    width:var(--canvas-width);
+    transform-origin:top left;
+    background:var(--color-cream);
+  }
+  .stage{
+    position:relative;
+    width:var(--canvas-width);
+    height:var(--stage-height);
+    overflow:hidden;
+  }
+
+  .abs{ position:absolute; }
+  .decor{ pointer-events:none; }
+
+  /* repeating decorative texture bands */
+  .bg-band{
+    position:absolute;
+    left:-32px;
+    width:1504px;
+    background-image:url('https://www.figma.com/api/mcp/asset/bdd7fca7-2ee7-408e-afd5-1682c1555870');
+    background-repeat:repeat;
+    z-index: -1;
+    background-size:376px 341px;
+    opacity:.12;
+  }
+  .bg-band--dark{ opacity:.10; }
+
+  /* thin grid divider lines used inside the blue bands */
+  .line-h{ position:absolute; height:2px; background:var(--color-line); }
+  .line-v{ position:absolute; width:2px; background:var(--color-line); }
+
+  /* =========================================================
+     SHARED TYPE STYLES
+     ========================================================= */
+  .section-title{
+    display:flex; align-items:center; gap:var(--space-md);
+    color:var(--color-blue); font-style:italic; font-weight:400;
+    font-size:var(--fs-section-title); letter-spacing:-7.04px; white-space:nowrap;
+  }
+  .section-title__icon{ width:63px; height:60px; object-fit:cover; }
+
+  .band-title{
+    color:var(--color-cream); font-style:italic; font-weight:400;
+    font-size:var(--fs-hero); letter-spacing:-6.4px; white-space:nowrap; text-align:center;
+  }
+
+  .project-title{
+    display:flex; align-items:center; gap:var(--space-md);
+    color:var(--color-blue); font-size:var(--fs-project-title);
+    letter-spacing:-5.28px; white-space:nowrap;
+  }
+  .project-title__icon{ width:63px; height:60px; object-fit:cover; }
+
+  .project-copy{ color:var(--color-blue); font-size:var(--fs-cta); letter-spacing:-1.98px; line-height:normal; }
+  .project-copy b{ font-style:italic; font-weight:700; }
+
+  .marquee{
+    position:absolute; background:var(--color-blue); height:65px; width:1547.5px;
+    display:flex; align-items:center; justify-content:center; padding:0 10px;
+  }
+  .marquee p{ color:var(--color-white); font-size:var(--fs-marquee); letter-spacing:-3.52px; line-height:.877; white-space:nowrap; }
+
+  .pill-tags{
+    background:var(--color-blue); border-radius:29px; display:flex;
+    align-items:center; gap:3px; padding:10px;
+  }
+  .pill-tags span{ color:var(--color-white); font-size:var(--fs-badge); text-align:center; letter-spacing:-1.8px; }
+  .pill-tags em{ font-style:italic; }
+  .pill-divider{ width:80px; height:2px; background:rgba(255,255,255,0); }
+
+  .software-pill{
+    background:var(--color-blue); display:flex; align-items:center; gap:10px;
+    height:45.918px; padding:10px;
+  }
+  .software-pill p{ color:var(--color-white); font-size:var(--fs-marquee); letter-spacing:-3.52px; line-height:.877; white-space:nowrap; }
+  .software-pill__dot{ width:4.129px; height:4.129px; border-radius:50%; background:var(--color-white); }
+
+  .skills-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px 24px; width:360px; }
+  .skill-tile{
+    border:2px solid var(--color-blue); border-radius:var(--radius-md);
+    display:flex; align-items:center; justify-content:center; padding:8px; overflow:hidden;
+  }
+  .skill-tile img{ width:56px; height:56px; object-fit:cover; }
+
+  .tools-used-wrap{ display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
+  .tools-used-label{ color:var(--color-cream); font-style:italic; font-size:var(--fs-badge); letter-spacing:-1.8px; }
+  .tools-used-pill{
+    background:var(--color-cream); border-radius:18px; display:flex;
+    align-items:center; gap:3px; padding:10px 4px;
+  }
+
+  .body-copy{ color:var(--color-blue); font-size:var(--fs-body); letter-spacing:-2.2px; line-height:normal; }
+  .body-copy em{ font-style:italic; }
+  .body-copy b{ font-weight:700; }
+
+  .contact-row{ display:flex; align-items:center; gap:10px; padding:10px; }
+  .contact-row img{ width:24px; height:24px; }
+  .contact-row span{ color:var(--color-blue); font-style:italic; font-size:var(--fs-badge); letter-spacing:-2.2px; white-space:nowrap; }
+
+  .edu-block{ display:flex; flex-direction:column; gap:6px; color:var(--color-blue); font-size:var(--fs-badge); letter-spacing:-2.2px; }
+  .edu-block strong{ font-weight:700; }
+  .edu-block em{ font-style:italic; display:block; line-height:1.06; }
+
+  .work-list{ display:flex; flex-direction:column; gap:27px; }
+  .work-row{ display:flex; gap:29px; align-items:flex-start; }
+  .work-row__meta{
+    display:flex; flex-direction:column; align-items:flex-end; text-align:right; width:191px;
+    color:var(--color-blue); font-size:var(--fs-marquee); letter-spacing:-3.52px;
+  }
+  .work-row__meta strong{ font-weight:700; line-height:.877; }
+  .work-row__meta time{ font-style:normal; font-weight:400; line-height:.877; }
+  .work-row__body{ display:flex; flex-direction:column; width:514px; gap:18px; }
+  .work-row__org{ font-style:italic; font-weight:700; font-size:var(--fs-marquee); letter-spacing:-3.52px; color:var(--color-blue); line-height:.877; }
+  .work-row__desc{ font-size:var(--fs-badge); letter-spacing:-2.2px; color:var(--color-blue); line-height:.877; }
+
+  .hero-tagline{ color:var(--color-blue); font-size:var(--fs-tagline); letter-spacing:-2.16px; }
+  .hero-tagline em{ font-style:italic; }
+  .hero-tagline b{ font-weight:700; }
+
+  .footer{ background:var(--color-blue); width:100%; padding:20px 80px; }
+  .footer-grid{ display:grid; grid-template-columns:repeat(3,max-content); gap:36px; padding:10px; }
+  .footer-item{ display:flex; align-items:center; gap:17px; padding:10px; text-decoration:none; }
+  .footer-item img{ width:38px; height:38px; }
+  .footer-item__text p{ color:var(--color-white); font-style:italic; letter-spacing:-1px; line-height:normal; }
+  .footer-item__label{ font-size:var(--fs-social-label); }
+  .footer-item__value{ font-style:normal; font-size:var(--fs-social-value); }
+
+  /* =========================================================
+     RESPONSIVE — proportional scaling of the whole composition.
+     The composition is a single fixed-ratio graphic artwork
+     (only one 1440px desktop frame exists in the source file),
+     so scaling the entire canvas is what keeps it pixel-accurate
+     at every viewport instead of inventing an un-designed layout.
+     JS (below) drives continuous scaling; these breakpoints are
+     the two reference sizes called out in the brief.
+     ========================================================= */
+  @media (max-width:1024px){ body{ overflow-x:hidden; } }
+  @media (max-width:768px){ body{ overflow-x:hidden; } }
+</style>
+</head>
+<body>
+
+<div class="canvas-wrapper">
+  <div class="canvas" id="canvas">
+
+    <div class="stage">
+
+      <!-- ===================== HERO ===================== -->
+      <section aria-label="Intro / Portfolio cover">
+        <div class="bg-band abs" style="top:0; height:1024px;"></div>
+
+        <img class="abs decor" src="https://www.figma.com/api/mcp/asset/5f32cda3-8357-4f9c-8293-b735cd5566d2" alt="" style="left:773px; top:382px; width:548px; height:245px;">
+
+        <div class="abs decor" style="left:-152px; top:41px; width:1141.813px; height:1141.813px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-3.25deg); width:1082.281px; height:1082.281px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/54d5129c-5581-402b-8d27-9f0a320a1f4e" alt="Great wave illustration" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="abs decor" style="left:869px; top:750px; width:361.391px; height:441.715px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-18.5deg); width:281.433px; height:397.795px;">
+            <img src="https://www.figma.com/api/mcp/asset/7911ec12-b0ee-4ed2-a40a-9f8a5b817327" alt="Decorative portrait detail" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="abs decor" style="left:689px; top:498px; width:925.087px; height:798.784px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-57.69deg); width:421.402px; height:828.063px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/7ea8df20-b927-46bb-b359-9868bd94e30c" alt="Decorative portrait crop" style="position:relative; left:-70.78%; top:-10.37%; width:223.66%; height:113.82%; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="abs pill-tags" style="left:1027px; top:545px;">
+          <span style="width:143px;">Graphic <em>Designer</em></span>
+          <div class="pill-divider"></div>
+          <span style="width:45px;">2026</span>
+        </div>
+
+        <p class="abs hero-tagline" style="left:807px; top:431px; transform:translateY(-50%); width:189px;"><em>by</em> <b>Wade Gonzales</b></p>
+        <h1 class="abs band-title" style="left:1002.5px; top:410px; transform:translate(-50%,-50%); color:var(--color-blue-deep);">Portfolio</h1>
+
+      </section>
+      <div class="marquee" style="left:-87.48px; top:1103px; transform:rotate(-1.88deg);"><p>UI/UX Design&nbsp;•  Graphic Design&nbsp; • Branding &amp; Logos&nbsp; • Social Media Visuals&nbsp; • Video Editing&nbsp; • Event Materials&nbsp; • Infographics</p></div>
+
+      <!-- ============ ABOUT / EDUCATION / SOFTWARE / CONTACT / WORK ============ -->
+      <section aria-label="About, education, skills, contact and work experience">
+        <div class="bg-band abs" style="top:1122px; height:1024px;"></div>
+
+        <div class="abs decor" style="left:-4px; top:1125px; width:583px; height:554px; overflow:hidden;">
+          <img src="https://www.figma.com/api/mcp/asset/98b4ecb2-6d13-4b8b-bb5e-eff1fefd9e7e" alt="" style="position:relative; left:-13.32%; top:-14.42%; width:120.73%; height:126.94%; object-fit:cover;">
+        </div>
+
+        <div class="abs decor" style="left:-45px; top:1634.5px; width:629.036px; height:64.501px; display:flex; align-items:center; justify-content:center;">
+          <div class="software-pill" style="transform:rotate(-1.7deg) skewX(0.38deg); width:627.649px;">
+            <p>Design</p>
+            <span class="software-pill__dot"></span>
+            <p>UI/UX</p>
+            <span class="software-pill__dot"></span>
+            <p>Design Thinking</p>
+            <span class="software-pill__dot"></span>
+            <p>Creativity</p>
+          </div>
+        </div>
+
+        <div class="abs decor" style="left:356px; top:1441px; width:496.232px; height:805.167px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(8.89deg); width:384.144px; height:754.851px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/7ea8df20-b927-46bb-b359-9868bd94e30c" alt="" style="position:relative; left:-70.78%; top:-10.37%; width:223.66%; height:113.82%; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="abs decor" style="left:1223.81px; top:1343.29px; width:317.646px; height:326.72px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-18.5deg); width:247.366px; height:261.748px;">
+            <img src="https://www.figma.com/api/mcp/asset/7911ec12-b0ee-4ed2-a40a-9f8a5b817327" alt="" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+
+        <!-- Work Experience -->
+        <header class="abs section-title" style="left:648px; top:1482px; width:548px;">
+          Work Experience <img class="section-title__icon" src="https://www.figma.com/api/mcp/asset/8b2950a6-cf36-4c3a-bc3e-be051931055c" alt="">
+        </header>
+        <div class="abs work-list" style="left:657px; top:1569px; width:734px;">
+          <article class="work-row">
+            <div class="work-row__meta"><strong>UI/UX DESIGN</strong><time>2024-2025</time></div>
+            <div class="work-row__body">
+              <h3 class="work-row__org">Responsible Gamers Society</h3>
+              <p class="work-row__desc">Designed a modern esports/gaming-inspired UI/UX with immersive visuals, intuitive navigation, and engaging user experience.</p>
+            </div>
+          </article>
+          <article class="work-row">
+            <div class="work-row__meta"><strong>GRAPHIC DESIGNER</strong><time>2025-2026</time></div>
+            <div class="work-row__body">
+              <h3 class="work-row__org">College of Computer Studies in Asian College of Technology Multimedia</h3>
+              <p class="work-row__desc">Designed creative visual materials for school events, including event branding, logos, announcements, social media graphics, posters, and promotional content, ensuring consistent and impactful communication across digital and print platforms.</p>
+            </div>
+          </article>
+          <article class="work-row">
+            <div class="work-row__meta"><strong>GRAPHIC DESIGNER</strong><time>2026</time></div>
+            <div class="work-row__body">
+              <h3 class="work-row__org">Pelvini</h3>
+              <p class="work-row__desc">Worked as a Graphic Designer for a watch company, creating brand assets, promotional materials, product visuals, and marketing content that enhanced the brand's luxury appeal and visual identity across digital and print platforms.</p>
+            </div>
+          </article>
+        </div>
+
+        <!-- About Me -->
+        <div class="abs" style="left:44px; top:1731px; width:548px;">
+          <header class="section-title">About Me <img class="section-title__icon" src="https://www.figma.com/api/mcp/asset/8b2950a6-cf36-4c3a-bc3e-be051931055c" alt=""></header>
+          <p class="body-copy" style="width:440px; margin-top:10px;">I'm <em>Harvey Wade Gonzales</em> — an IT graduate from the Philippines who turns ideas into bold visuals.  I specialize in branding, social media design, and event materials, with skills in video editing and web development on the side.</p>
+        </div>
+
+        <!-- Education -->
+        <div class="abs" style="left:41px; top:1922px; width:551px;">
+          <header class="section-title">Education <img class="section-title__icon" src="https://www.figma.com/api/mcp/asset/8b2950a6-cf36-4c3a-bc3e-be051931055c" alt=""></header>
+          <div class="edu-block" style="margin-top:10px; width:460px;">
+            <strong>Bachelor of Science in Information Technology</strong>
+            <em>Asian College of  Technology - Cebu City<span style="font-style:normal;">(2022-2026)</span></em>
+          </div>
+        </div>
+
+        <!-- Softwares -->
+        <div class="abs" style="left:648px; top:1219px; width:376px; display:flex; flex-direction:column; align-items:center; gap:4px;">
+          <header class="section-title">Softwares <img class="section-title__icon" src="https://www.figma.com/api/mcp/asset/8b2950a6-cf36-4c3a-bc3e-be051931055c" alt=""></header>
+          <div class="skills-grid" role="list" aria-label="Design software icons">
+            <div class="skill-tile" role="listitem"><img src="https://www.figma.com/api/mcp/asset/88387b5d-485c-4f75-b6a4-191978526fcb" alt="Software icon"></div>
+            <div class="skill-tile" role="listitem"><img src="https://www.figma.com/api/mcp/asset/093aee24-7612-4bd2-b20a-d4aa9fe4bd40" alt="Software icon"></div>
+            <div class="skill-tile" role="listitem"><img src="https://www.figma.com/api/mcp/asset/ffa75e8d-8642-423d-9691-e52c692bf714" alt="Software icon"></div>
+            <div class="skill-tile" role="listitem"><img src="https://www.figma.com/api/mcp/asset/84ae9260-543e-4a9c-8cbb-07c851d2b2d5" alt="Software icon"></div>
+            <div class="skill-tile" role="listitem"><img src="https://www.figma.com/api/mcp/asset/4e09b14c-cb81-4adc-953f-dcbd5844ff94" alt="Software icon"></div>
+            <div class="skill-tile" role="listitem"><img src="https://www.figma.com/api/mcp/asset/6caab33f-bd63-45af-8a85-e5b8442449f2" alt="Software icon"></div>
+            <div class="skill-tile" role="listitem"><img src="https://www.figma.com/api/mcp/asset/18fa4e5a-45a0-4c8f-a7f2-37a4a15ca659" alt="Software icon"></div>
+            <div class="skill-tile" role="listitem"><img src="https://www.figma.com/api/mcp/asset/5407b03d-7378-4df3-87d7-63ed1bc54b72" alt="Software icon"></div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="abs" style="left:1055px; top:1219px; width:307px; display:flex; flex-direction:column; align-items:flex-end;">
+          <header class="section-title">Contact <img class="section-title__icon" src="https://www.figma.com/api/mcp/asset/8b2950a6-cf36-4c3a-bc3e-be051931055c" alt=""></header>
+          <div style="width:100%;">
+            <div class="contact-row"><img src="https://www.figma.com/api/mcp/asset/ad9a6298-6361-4342-8a1c-ed823504aa9a" alt="Email icon"><span>wadegonzales016@gmail.com</span></div>
+            <div class="contact-row" style="padding-left:12px;"><img src="https://www.figma.com/api/mcp/asset/020dedcf-59de-4a2b-aa8f-6e1b07169e28" alt="Phone icon" style="width:18px; height:18px;"><span>+ 63 9912934765</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== BLUE BAND 1 — VISUAL IDENTITY ===================== -->
+      <section aria-label="Visual Identity work">
+        <div class="abs" style="left:0; top:2147px; width:1440px; height:1024px; background:var(--color-blue);"></div>
+        <div class="bg-band abs bg-band--dark" style="top:2147px; height:1024px;"></div>
+
+        <h2 class="abs band-title" style="left:347px; top:2475px;">Visual Identity</h2>
+
+        <div class="abs tools-used-wrap" style="left:76px; top:3004px;">
+          <span class="tools-used-label">Tools Used</span>
+          <div class="tools-used-pill">
+            <div class="skill-tile" style="width:61px; height:60px;"><img src="https://www.figma.com/api/mcp/asset/88387b5d-485c-4f75-b6a4-191978526fcb" alt="Software icon"></div>
+            <div class="skill-tile" style="width:60px; height:60px;"><img src="https://www.figma.com/api/mcp/asset/4e09b14c-cb81-4adc-953f-dcbd5844ff94" alt="Software icon"></div>
+            <div class="skill-tile" style="width:61px; height:60px;"><img src="https://www.figma.com/api/mcp/asset/84ae9260-543e-4a9c-8cbb-07c851d2b2d5" alt="Software icon"></div>
+          </div>
+        </div>
+
+        <div class="line-v" style="left:1081px; top:2133px; height:1078px;"></div>
+        <div class="line-v" style="left:371px; top:2147px; height:1078px;"></div>
+        <div class="line-v" style="left:276px; top:2167px; height:1078px;"></div>
+        <div class="line-v" style="left:76px; top:2167px; height:1078px;"></div>
+        <div class="line-h" style="left:-47px; top:2702px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:3037px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:3004px; width:1535px;"></div>
+        <div class="line-h" style="left:-49px; top:3107px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:2610px; width:1535px;"></div>
+
+        <!-- ===== Project: Classic Hollywood ===== -->
+        <div class="marquee" style="left:-87.48px; top:3186px; transform:rotate(-1.88deg);"><p>UI/UX Design&nbsp;•  Graphic Design&nbsp; • Branding &amp; Logos&nbsp; • Social Media Visuals&nbsp; • Video Editing&nbsp; • Event Materials&nbsp; • Infographics</p></div>
+
+        <article class="abs" style="left:72px; top:3340px; width:504px;">
+          <h3 class="project-title">Classic Hollywood <img class="project-title__icon" src="https://www.figma.com/api/mcp/asset/8b2950a6-cf36-4c3a-bc3e-be051931055c" alt=""></h3>
+          <p class="project-copy" style="margin-top:8px;"><b>Classic Hollywood</b> is a glamorous event theme inspired by the golden era of American cinema, featuring vintage theater marquees, Art Deco elements, warm golden lighting, and luxurious red-carpet aesthetics. The theme evokes sophistication, prestige, and timeless elegance, capturing the charm of Hollywood's most iconic period.</p>
+        </article>
+
+        <div class="abs decor" style="left:985.2px; top:3282px; width:503.483px; height:694.606px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.81deg); width:482.258px; height:679.715px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/cce9d653-30b9-42b3-890b-7c0e776be064" alt="Classic Hollywood invitation card design" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:611.31px; top:3316.41px; width:368.384px; height:509.904px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.81deg); width:352.801px; height:499.011px; border-radius:20px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/ab683121-5d7d-4243-8af1-536942204a81" alt="CCS Gala 2026 souvenir program cover" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:-32px; top:3615.3px; width:646.937px; height:467.385px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.81deg); width:633.117px; height:447.613px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/d4a95c85-5111-4cf2-936f-5a4b763dbc01" alt="Classic Hollywood certificate design" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:630.52px; top:3834.46px; width:362.506px; height:451.149px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.81deg); width:348.773px; height:440.354px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/7ab5ed43-dcff-4780-b0b6-caa7e9fd2f23" alt="Table number card design" style="width:100%; height:112.03%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:1007.35px; top:3979.78px; width:486.611px; height:171.045px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.81deg); width:481.927px; height:155.904px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/2fbdbffd-77da-4b91-9a10-09fcb5646087" alt="Event coupon design one" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:-15.44px; top:4085.87px; width:637.707px; height:212.052px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(178.19deg); width:631.953px; height:192.19px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/f1e97547-5a32-4a9a-9a8f-7cadadc6c156" alt="Table name card design" style="position:relative; top:-325.53%; width:100%; height:425.53%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:1014.69px; top:4154.25px; width:485.837px; height:124.795px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.81deg); width:482.617px; height:109.609px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/e1a521e2-fbc1-4e3f-898f-facd1ceac3bb" alt="Event coupon design two" style="width:100%; height:142.44%; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="bg-band abs" style="top:3186px; height:1024px; opacity:.12;"></div>
+        <img class="abs decor" style="left:525.5px; top:3743.5px; width:99px; height:99px; opacity:.12;" src="https://www.figma.com/api/mcp/asset/0a48ecd2-6d1b-4476-a6a4-31197b58dfbf" alt="">
+        <img class="abs decor" style="left:247.5px; top:3882.5px; width:99px; height:99px; opacity:.12;" src="https://www.figma.com/api/mcp/asset/2e55793a-663e-44c9-81f3-398b99457bbd" alt="">
+        <img class="abs decor" style="left:386.5px; top:3882.5px; width:99px; height:99px; opacity:.12;" src="https://www.figma.com/api/mcp/asset/fb4066dd-5aba-4739-8e74-03bf87a9449e" alt="">
+
+        <!-- ===== Project: Iridescence ===== -->
+        <div class="marquee" style="left:-87.48px; top:4253px; transform:rotate(-1.88deg);"><p>UI/UX Design&nbsp;•  Graphic Design&nbsp; • Branding &amp; Logos&nbsp; • Social Media Visuals&nbsp; • Video Editing&nbsp; • Event Materials&nbsp; • Infographics</p></div>
+
+        <article class="abs" style="left:72px; top:4434px; width:504px;">
+          <h3 class="project-title">Iridescence <img class="project-title__icon" src="https://www.figma.com/api/mcp/asset/8b2950a6-cf36-4c3a-bc3e-be051931055c" alt=""></h3>
+          <p class="project-copy" style="margin-top:8px;"><b>Iridescence</b> is a vibrant gala theme inspired by the shimmering, color-shifting qualities of light. Featuring holographic effects, luminous gradients, and radiant visual elements, it creates a modern and elegant atmosphere that symbolizes creativity, excellence, and the beauty of diversity.</p>
+        </article>
+
+        <div class="abs decor" style="left:1016.21px; top:4317px; width:524.143px; height:721.082px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-2.07deg); width:499.065px; height:703.52px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/3c1f3024-cfce-4c1f-8157-262e60770f63" alt="Iridescence invitation card 2025" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:632.15px; top:4483.31px; width:379.19px; height:523.324px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-2.07deg); width:360.987px; height:510.622px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/73a1e46f-1660-4695-9e6f-3a6040950ce9" alt="Iridescence table number 2025" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:-46.69px; top:4615.94px; width:671.6px; height:486.656px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-2.07deg); width:655.298px; height:463.296px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/c5e1d21f-c46a-49cf-89b3-645e46744dbb" alt="Champion of Valor award design" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:1045.78px; top:5118.6px; width:524.224px; height:723.445px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-2.07deg); width:499.06px; height:705.884px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/4064f1a5-dc22-4d49-9df4-c272dc8036db" alt="Iridescence event programme, page one" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:652.08px; top:5022.84px; width:379.579px; height:523.831px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-2.07deg); width:361.359px; height:511.116px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/4064f1a5-dc22-4d49-9df4-c272dc8036db" alt="Iridescence event programme, page two" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:-28.5px; top:5108.37px; width:671.599px; height:486.627px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-2.07deg); width:655.298px; height:463.267px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/7d19f2c0-7d81-4a19-836a-34dd823f5336" alt="Iridescence 5x3.5 print piece" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:1043.25px; top:5049.3px; width:500.233px; height:59.48px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-2.07deg); width:499.06px; height:41.487px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/a4a72ab3-d75f-4f5a-8513-c6d5da7efd0a" alt="Iridescence bracelet event pass" style="position:relative; left:-9.29%; width:117.89%; height:101.4%; object-fit:cover;">
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== BLUE BAND 2 — UI/UX DESIGN ===================== -->
+      <section aria-label="UI/UX Design work">
+        <div class="abs" style="left:0; top:5233px; width:1440px; height:1024px; background:var(--color-blue);"></div>
+        <div class="bg-band abs bg-band--dark" style="top:5233px; height:1024px;"></div>
+
+        <h2 class="abs band-title" style="left:361px; top:5557px;">UI/UX Design</h2>
+
+        <div class="abs tools-used-wrap" style="left:76px; top:6090px;">
+          <span class="tools-used-label">Tool Used</span>
+          <div class="tools-used-pill" style="width:73px; height:68px;">
+            <div class="skill-tile" style="width:60px; height:59px;"><img src="https://www.figma.com/api/mcp/asset/ffa75e8d-8642-423d-9691-e52c692bf714" alt="Software icon"></div>
+          </div>
+        </div>
+
+        <div class="line-v" style="left:1061px; top:5219px; height:1078px;"></div>
+        <div class="line-v" style="left:388px; top:5233px; height:1078px;"></div>
+        <div class="line-v" style="left:151px; top:5253px; height:1078px;"></div>
+        <div class="line-v" style="left:76px; top:5253px; height:1078px;"></div>
+        <div class="line-h" style="left:-47px; top:5788px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:6123px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:6090px; width:1535px;"></div>
+        <div class="line-h" style="left:-49px; top:6193px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:5696px; width:1535px; opacity:.6;"></div>
+
+        <!-- ===== Project: Responsible Gamers Society ===== -->
+        <div class="marquee" style="left:-87.48px; top:6311px; transform:rotate(-1.88deg);"><p>UI/UX Design&nbsp; Graphic Design&nbsp; Branding &amp; Logos&nbsp; Social Media Visuals&nbsp; Video Editing&nbsp; Event Materials&nbsp; Infographics</p></div>
+
+        <article class="abs" style="left:72px; top:6532px; width:560px;">
+          <h3 class="project-title">Responsible Gamers Society <img class="project-title__icon" src="https://www.figma.com/api/mcp/asset/8b2950a6-cf36-4c3a-bc3e-be051931055c" alt=""></h3>
+          <p class="project-copy" style="margin-top:8px; width:504px;"><b>Iridescence</b> is a vibrant gala theme inspired by the shimmering, color-shifting qualities of light. Featuring holographic effects, luminous gradients, and radiant visual elements, it creates a modern and elegant atmosphere that symbolizes creativity, excellence, and the beauty of diversity.</p>
+        </article>
+
+        <div class="abs decor" style="left:944.73px; top:6453px; width:288.387px; height:289.029px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.91deg); width:279.192px; height:279.856px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/6174c4d2-c9b4-4511-a1fa-4bb49af3b9c0" alt="Responsible Gamers Society UI detail one" style="position:relative; left:-6.43%; top:-8.31%; width:111.19%; height:219%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:1244.95px; top:6377.98px; width:869.616px; height:501.831px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.91deg); width:854.27px; height:473.551px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/e08339e4-2092-49a4-9a9b-c841d85f3c1c" alt="Responsible Gamers Society dashboard mockup" style="position:relative; left:-2.65%; width:102.65%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:647.96px; top:6462.71px; width:288.375px; height:288.687px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.91deg); width:279.192px; height:279.514px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/6174c4d2-c9b4-4511-a1fa-4bb49af3b9c0" alt="Responsible Gamers Society UI detail two" style="position:relative; left:-6.43%; top:-113.16%; width:111.19%; height:219.27%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:-53px; top:6745.57px; width:1293.092px; height:177.75px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.91deg); width:1289.309px; height:134.745px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/9cba264d-ce63-4ac2-acbf-8fed57efa26d" alt="Responsible Gamers Society navigation bar mockup" style="width:100%; height:336.3%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:-46.31px; top:6921.66px; width:803.87px; height:500.982px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.91deg); width:788.442px; height:474.903px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/ec051c79-98c7-45bb-bf54-81511d029825" alt="Responsible Gamers Society landing page mockup" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <div class="abs decor" style="left:765.53px; top:6890.88px; width:912.61px; height:506.152px; display:flex; align-items:center; justify-content:center;">
+          <div style="transform:rotate(-1.91deg); width:897.192px; height:476.44px; border-radius:12px; overflow:hidden;">
+            <img src="https://www.figma.com/api/mcp/asset/3ab6211b-c5f2-4574-96ec-78fc62d63105" alt="Responsible Gamers Society profile page mockup" style="position:relative; left:-21.78%; top:-19.16%; width:122.53%; height:119.16%; object-fit:cover;">
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== BLUE BAND 3 — VIDEO EDITING ===================== -->
+      <section aria-label="Video editing work">
+        <div class="abs" style="left:0; top:7335px; width:1440px; height:1024px; background:var(--color-blue);"></div>
+        <div class="bg-band abs bg-band--dark" style="top:7335px; height:1024px;"></div>
+
+        <h2 class="abs band-title" style="left:376px; top:7663px;">Video Editing</h2>
+
+        <div class="abs tools-used-wrap" style="left:76px; top:8192px;">
+          <span class="tools-used-label">Tools Used</span>
+          <div class="tools-used-pill">
+            <div class="skill-tile" style="width:60px; height:60px;"><img src="https://www.figma.com/api/mcp/asset/093aee24-7612-4bd2-b20a-d4aa9fe4bd40" alt="Software icon"></div>
+            <div class="skill-tile" style="width:60px; height:60px;"><img src="https://www.figma.com/api/mcp/asset/18fa4e5a-45a0-4c8f-a7f2-37a4a15ca659" alt="Software icon"></div>
+            <div class="skill-tile" style="width:60px; height:60px;"><img src="https://www.figma.com/api/mcp/asset/5407b03d-7378-4df3-87d7-63ed1bc54b72" alt="Software icon"></div>
+          </div>
+        </div>
+
+        <div class="line-v" style="left:1055px; top:7321px; height:1078px;"></div>
+        <div class="line-v" style="left:401px; top:7335px; height:1078px;"></div>
+        <div class="line-v" style="left:276px; top:7355px; height:1078px;"></div>
+        <div class="line-v" style="left:76px; top:7355px; height:1078px;"></div>
+        <div class="line-h" style="left:-47px; top:7890px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:8225px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:8192px; width:1535px;"></div>
+        <div class="line-h" style="left:-49px; top:8295px; width:1535px;"></div>
+        <div class="line-h" style="left:-32px; top:7798px; width:1535px;"></div>
+
+        <div class="bg-band abs" style="top:8359px; height:774px; opacity:.12;"></div>
+      </section>
+
+    </div><!-- /.stage -->
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer" aria-label="Contact and social links">
+      <div class="footer-grid">
+        <a class="footer-item" href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <img src="https://www.figma.com/api/mcp/asset/9fb6cea4-d28b-4e87-a817-347ad5377975" alt="Facebook">
+          <span class="footer-item__text"><p class="footer-item__label">Facebook</p><p class="footer-item__value">Wade Gonzales</p></span>
+        </a>
+        <a class="footer-item" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <img src="https://www.figma.com/api/mcp/asset/4849b2ef-1e78-4edd-aacb-e38cbc96d6ee" alt="LinkedIn">
+          <span class="footer-item__text"><p class="footer-item__label">LinkedIn</p><p class="footer-item__value">Harvey Wade Gonzales</p></span>
+        </a>
+        <a class="footer-item" href="https://github.com/wadegonzales" target="_blank" rel="noopener noreferrer">
+          <img src="https://www.figma.com/api/mcp/asset/c4d16b44-408f-4623-8324-fe163b3e1045" alt="GitHub">
+          <span class="footer-item__text"><p class="footer-item__label">Github</p><p class="footer-item__value">wadegonzales</p></span>
+        </a>
+        <a class="footer-item" href="https://instagram.com/lokishikun" target="_blank" rel="noopener noreferrer">
+          <img src="https://www.figma.com/api/mcp/asset/3b230bea-ce17-4f5e-8c73-fa5b0743d0e9" alt="Instagram">
+          <span class="footer-item__text"><p class="footer-item__label">Instagram</p><p class="footer-item__value">@lokishikun</p></span>
+        </a>
+        <a class="footer-item" href="mailto:wadegonzales016@gmail.com">
+          <img src="https://www.figma.com/api/mcp/asset/2a57d920-487e-4b9c-b3b8-c7ebf3aa7e5f" alt="Gmail">
+          <span class="footer-item__text"><p class="footer-item__label">Email</p><p class="footer-item__value">wadegonzales016@gmail.com</p></span>
+        </a>
+
+        <a class="footer-item" href="">
+          <img src="https://www.figma.com/api/mcp/asset/2a57d920-487e-4b9c-b3b8-c7ebf3aa7e5f" alt="Gmail">
+          <span class="footer-item__text"><p class="footer-item__label">Gdrive</p><p class="footer-item__value">FULL PORTFOLIO LINK</p></span>
+        </a>
+      </div>
+    </footer>
+
+  </div><!-- /.canvas -->
+</div><!-- /.canvas-wrapper -->
+
+<script>
+  // The composition is a single fixed-ratio 1440px artwork (one desktop
+  // Figma frame, no separate tablet/mobile frames exist). To stay pixel
+  // accurate at any viewport, we scale the whole canvas down proportionally
+  // instead of re-flowing content that was never designed for smaller widths.
+  (function () {
+    var canvas = document.getElementById('canvas');
+    var wrapper = document.querySelector('.canvas-wrapper');
+    var BASE_WIDTH = 1440;
+
+    function applyScale() {
+      var viewportWidth = window.innerWidth;
+      var scale = viewportWidth < BASE_WIDTH ? viewportWidth / BASE_WIDTH : 1;
+      canvas.style.transform = 'scale(' + scale + ')';
+      var naturalHeight = canvas.scrollHeight;
+      wrapper.style.height = (naturalHeight * scale) + 'px';
+    }
+
+    window.addEventListener('resize', applyScale);
+    window.addEventListener('load', applyScale);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(applyScale);
+    }
+    applyScale();
+  })();
+</script>
+
+</body>
+</html>
